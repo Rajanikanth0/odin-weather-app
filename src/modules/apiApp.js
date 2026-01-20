@@ -25,7 +25,7 @@ async function getWeatherData() {
   let location = getLocation();
   if (!location) return;
 
-  const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/bengaluru?unitGroup=us&key=Z932PRYFBE5HHBNXTRXJBL7RD&contentType=json`;
+  const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=Z932PRYFBE5HHBNXTRXJBL7RD&contentType=json`;
   
   try {
     const weatherData = await getData(url)
