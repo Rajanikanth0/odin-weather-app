@@ -1,4 +1,4 @@
 import "./styles.css";
-import { getWeatherData } from "./modules/apiApp";
+import { handleForm } from "./modules/formApp";
 
-// getWeatherData();
+handleForm();

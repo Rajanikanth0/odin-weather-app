@@ -6,11 +6,6 @@ class NotFoundError extends Error {
   }
 }
 
-function getLocation() {
-  let location = prompt("location?", "");
-  return location?.trim() || null;
-}
-
 async function getData(url) {
   const response = await fetch(url);
 
@@ -26,10 +21,7 @@ function getRequiredData(weatherData) {
   return days.map(({ datetime, conditions, icon }) => ({ datetime, conditions, icon }));
 }
 
-async function getWeatherData() {
-  let location = getLocation();
-  if (!location) return;
-
+async function getWeatherData(location) {
   const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=Z932PRYFBE5HHBNXTRXJBL7RD&contentType=json`;
   
   try {
