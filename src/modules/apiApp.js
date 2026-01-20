@@ -21,6 +21,11 @@ async function getData(url) {
   return response.json();
 }
 
+function getRequiredData(weatherData) {
+  const days = weatherData.days;
+  return days.map(({ datetime, conditions, icon }) => ({ datetime, conditions, icon }));
+}
+
 async function getWeatherData() {
   let location = getLocation();
   if (!location) return;
@@ -29,13 +34,14 @@ async function getWeatherData() {
   
   try {
     const weatherData = await getData(url)
-    console.log(weatherData);
+    const requiredData = getRequiredData(weatherData);
+    console.log(requiredData);
 
   } catch(err) {
     if (err instanceof NotFoundError) {
       console.log("Weather data not found!");
     } else {
-      console.log("Network Error!");
+      console.log("Network Error!", err);
     }
   }
 }
