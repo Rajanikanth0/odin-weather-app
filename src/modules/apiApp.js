@@ -1,24 +1,14 @@
-function getLocation() {
-  let location = prompt("location?", "");
-  return location?.trim();
+class NotFoundError extends Error {
+  constructor(response) {
+    super(`${response.statusText} for the location`);
+    this.name = "NotFoundError";
+    this.response = response;
+  }
 }
 
-function getWeatherData() {
-  let location = getLocation();
-  if (!location) return;
-
-  const url = `http://localhost:5500/${location}/database.json`;
-  
-  getData(url).then(weatherData => {
-    console.log(weatherData);
-  })
-  .catch(err => {
-    if (err instanceof NotFoundError) {
-      console.log("WeatherData not found!");
-    } else {
-      console.log("Network Error!");
-    }
-  });
+function getLocation() {
+  let location = prompt("location?", "");
+  return location?.trim() || null;
 }
 
 async function getData(url) {
@@ -28,15 +18,25 @@ async function getData(url) {
     throw new NotFoundError(response);
   }
 
-  const data = await response.json();
-  return data;
+  return response.json();
 }
 
-class NotFoundError extends Error {
-  constructor(response) {
-    super(`${response.statusText} for the location`);
-    this.name = "NotFoundError";
-    this.response = response;
+async function getWeatherData() {
+  let location = getLocation();
+  if (!location) return;
+
+  const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/bengaluru?unitGroup=us&key=Z932PRYFBE5HHBNXTRXJBL7RD&contentType=json`;
+  
+  try {
+    const weatherData = await getData(url)
+    console.log(weatherData);
+
+  } catch(err) {
+    if (err instanceof NotFoundError) {
+      console.log("Weather data not found!");
+    } else {
+      console.log("Network Error!");
+    }
   }
 }
 
