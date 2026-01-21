@@ -1,6 +1,53 @@
 html {
+  font-family: sans-serif;
   box-sizing: border-box;
 }
 *, *::before, *::after {
   box-sizing: inherit;
+}
+
+/* Table Styles */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+caption {
+  font-size: 1.5rem;
+  padding: 1rem;
+}
+tr {
+  height: 3rem;
+}
+
+thead {
+  font-size: 1.2rem;
+}
+
+tbody {
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+td, th {
+  border: thin solid #ccc;
+  padding: 0 1rem;
+}
+
+thead tr:first-child > th {
+  text-align: center;
+}
+
+th:first-child,
+td:first-child {
+  text-align: left;
+}
+
+th:not(:first-child),
+td:not(:first-child) {
+  text-align: right;
+}
+
+tr:nth-child(even) {
+  background-color: #e8f1ff;
 }

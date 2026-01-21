@@ -18,7 +18,8 @@ async function getData(url) {
 
 function getRequiredData(weatherData) {
   const days = weatherData.days;
-  return days.map(({ datetime, conditions, icon }) => ({ datetime, conditions, icon }));
+  console.log(days);
+  return days.map(({ datetime, conditions, icon, temp, tempmax, tempmin, sunrise, sunset }) => ({ datetime, conditions, icon }));
 }
 
 async function getWeatherData(location) {
