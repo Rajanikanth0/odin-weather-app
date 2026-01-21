@@ -6,6 +6,21 @@ html {
   box-sizing: inherit;
 }
 
+/* Form */
+form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+span {
+  color: red;
+}
+
+input {
+  padding: 0.2rem 0.5rem;
+  font: inherit;
+}
+
 /* Table Styles */
 
 table {
