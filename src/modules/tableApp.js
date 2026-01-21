@@ -2,41 +2,22 @@ function createElement(element, props = {}) {
   return Object.assign(document.createElement(element), props);
 }
 
-function getRow({onlyTh, scope, colspan = [], content}) {
+function createTh(content, scope, colspan) {
+  const th = createElement("th", { textContent: content, scope });
+  if (colspan) th.setAttribute("colspan", colspan);
+  return th;
+}
+
+function createTd(content) {
+  return createElement("td", { textContent: content });
+}
+
+function getRow({ onlyTh, scope, colspan = [], content }) {
   const tr = createElement("tr");
-  let elements = [];
 
-  if (onlyTh) {
-    const hasColSpan = Boolean(colspan.length);
-
-    const th = content.map((data, index) => {
-      const thElem = createElement("th", {
-        textContent: data,
-        scope: scope
-      });
-
-      if (hasColSpan) {
-        thElem.setAttribute("colspan", colspan[index]);
-      }
-
-      return thElem;
-    });
-
-    elements.push(...th);
-  } else {
-    const [thData, ...tdData] = content;
-
-    const th = createElement("th", {
-      textContent: thData,
-      scope: scope
-    });
-
-    const td = tdData.map(data => createElement("td", {
-      textContent: data
-    }));
-
-    elements.push(th, ...td);
-  }
+  const elements = onlyTh
+  ? content.map((data, index) => createTh(data, scope, colspan[index]))
+  : [ createTh(content[0], scope), ...content.slice(1).map(createTd) ];
 
   tr.append(...elements);
   return tr;
@@ -64,9 +45,7 @@ function getTable() {
     }
   ];
 
-  const rows = theadRows.map(rowData => getRow(rowData));
-
-  thead.append(...rows);
+  thead.append(...theadRows.map(getRow));
   table.append(caption, thead);
 
   return table;
