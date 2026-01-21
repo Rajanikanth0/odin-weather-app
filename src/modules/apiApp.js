@@ -16,9 +16,22 @@ async function getData(url) {
   return response.json();
 }
 
-function getRequiredData(weatherData) {
-  const days = weatherData.days;
-  return days.map(({ datetime, temp, tempmax, tempmin, sunrise, sunset, conditions, icon }) => [datetime, tempmax, tempmin, temp, sunrise, sunset, conditions, icon]);
+function fahtocelsius(fah) {
+  const celsius = (fah - 32) * 5 / 9;
+  return celsius.toFixed(2);
+}
+
+function getRequiredData({ days }) {
+  return days.map(({ datetime, temp, tempmax, tempmin, sunrise, sunset, conditions, icon }) => [
+    datetime,
+    fahtocelsius(tempmax),
+    fahtocelsius(tempmin),
+    fahtocelsius(temp),
+    sunrise,
+    sunset,
+    conditions,
+    icon
+  ]);
 }
 
 async function getWeatherData(location) {
