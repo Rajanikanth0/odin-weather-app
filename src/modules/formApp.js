@@ -23,13 +23,24 @@ function getForm() {
 function handleFormData(event) {
   event.preventDefault();
 
-  const formData = new FormData(event.target);
+  const form = event.target;
+
+  const formData = new FormData(form);
   const locationValue = formData.get("location");
 
   const location = locationValue?.trim() || null;
   if (!location) return;
   
-  handleTable(location);
+  handleTable(location).catch(err => {
+    let errorBox = document.querySelector("span");
+    
+    if (!errorBox) {
+      errorBox = document.createElement("span");
+      form.appendChild(errorBox);
+    }
+
+    errorBox.textContent = err.message;
+  });
 }
 
 function handleForm() {

@@ -1,6 +1,6 @@
 class NotFoundError extends Error {
   constructor(response) {
-    super(`${response.statusText} for the location`);
+    super(`Weather data not found!`);
     this.name = "NotFoundError";
     this.response = response;
   }
@@ -37,18 +37,9 @@ function getRequiredData({ days }) {
 async function getWeatherData(location) {
   const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=Z932PRYFBE5HHBNXTRXJBL7RD&contentType=json`;
   
-  try {
-    const weatherData = await getData(url)
-    const requiredData = getRequiredData(weatherData);
-    return requiredData;
-
-  } catch(err) {
-    if (err instanceof NotFoundError) {
-      console.log("Weather data not found!");
-    } else {
-      console.log("Network Error!", err);
-    }
-  }
+  const weatherData = await getData(url)
+  const requiredData = getRequiredData(weatherData);
+  return requiredData;
 }
 
 export { getWeatherData };
