@@ -18,8 +18,7 @@ async function getData(url) {
 
 function getRequiredData(weatherData) {
   const days = weatherData.days;
-  console.log(days);
-  return days.map(({ datetime, conditions, icon, temp, tempmax, tempmin, sunrise, sunset }) => ({ datetime, conditions, icon }));
+  return days.map(({ datetime, temp, tempmax, tempmin, sunrise, sunset, conditions, icon }) => [datetime, tempmax, tempmin, temp, sunrise, sunset, conditions, icon]);
 }
 
 async function getWeatherData(location) {
@@ -28,7 +27,7 @@ async function getWeatherData(location) {
   try {
     const weatherData = await getData(url)
     const requiredData = getRequiredData(weatherData);
-    console.log(requiredData);
+    return requiredData;
 
   } catch(err) {
     if (err instanceof NotFoundError) {

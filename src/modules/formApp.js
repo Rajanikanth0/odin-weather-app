@@ -1,4 +1,4 @@
-import { getWeatherData } from "./apiApp";
+import { handleTable } from "./tableApp";
 
 function getForm() {
   const form = document.createElement("form");
@@ -29,7 +29,7 @@ function handleFormData(event) {
   const location = locationValue?.trim() || null;
   if (!location) return;
   
-  getWeatherData(location);
+  handleTable(location);
 }
 
 function handleForm() {
@@ -37,6 +37,7 @@ function handleForm() {
   form.addEventListener("submit", handleFormData);
 
   const content = document.querySelector(".content");
+  content.textContent = "";
   content.appendChild(form);
 }
 

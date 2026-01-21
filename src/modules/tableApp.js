@@ -1,3 +1,5 @@
+import { getWeatherData } from "./apiApp";
+
 function createElement(element, props = {}) {
   return Object.assign(document.createElement(element), props);
 }
@@ -23,7 +25,7 @@ function getRow({ onlyTh, scope, colspan = [], content }) {
   return tr;
 }
 
-function getTable() {
+async function getTable(location) {
   const table = createElement("table");
 
   const caption = createElement("caption", {
@@ -31,6 +33,7 @@ function getTable() {
   });
 
   const thead = createElement("thead");
+  const tbody = createElement("tbody");
 
   const theadRows = [
     { onlyTh: true,
@@ -41,20 +44,25 @@ function getTable() {
     {
       onlyTh: true,
       scope: "col",
-      content: ["Date", "Max Temp", "Min Temp", "Avg Temp", "Avg Temp", "Avg Temp", "Avg Temp", "Avg Temp"]
+      content: ["Date", "Max Temp", "Min Temp", "Temp", "Sunrise", "Sunset", "Conditions", "Icon"]
     }
   ];
 
+  const days = await getWeatherData(location);
+  const tbodyRows = days.map(data => ({ onlyTh: false, scope: "row", content: data }));;
+  
   thead.append(...theadRows.map(getRow));
-  table.append(caption, thead);
+  tbody.append(...tbodyRows.map(getRow));
 
+  table.append(caption, thead, tbody);
   return table;
 }
 
-function handleTable() {
-  const table = getTable();
+async function handleTable(location) {
+  const table = await getTable(location);
 
   const content = document.querySelector(".content");
+  content.textContent = "";
   content.appendChild(table);
 }
 
