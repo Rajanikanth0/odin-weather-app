@@ -10,8 +10,23 @@ function createTh(content, scope, colspan) {
   return th;
 }
 
-function createTd(content) {
-  return createElement("td", { textContent: content });
+function createTd(content, index) {
+  const td = createElement("td", { textContent: content });
+
+  const iconIndex = 6;
+  if (index == iconIndex) {
+    const img = createElement("img");
+    img.className = "weatherIcon";
+    
+    import(`../media/weatherIcons/${content}.png`)
+      .then(result => img.src = result.default)
+      .catch(() => img.src = content);
+
+    td.textContent = "";
+    td.appendChild(img);
+  }
+
+  return td;
 }
 
 function getRow({ onlyTh, scope, colspan = [], content }) {

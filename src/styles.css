@@ -32,6 +32,10 @@ input, button {
   font: inherit;
 }
 
+.weatherIcon {
+  height: 2rem;
+}
+
 /* Table Styles */
 
 table {
