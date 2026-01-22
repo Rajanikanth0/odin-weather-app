@@ -1,4 +1,5 @@
 import { handleTable } from "./tableApp";
+import loadingGif from "../media/Loading.gif";
 
 function getForm() {
   const form = document.createElement("form");
@@ -16,7 +17,10 @@ function getForm() {
     textContent: "Submit"
   });
 
-  form.append(location, submit);
+  const span = document.createElement("span");
+  span.className = "errorField";
+
+  form.append(location, submit, span);
   return form;
 }
 
@@ -27,19 +31,23 @@ function handleFormData(event) {
 
   const formData = new FormData(form);
   const locationValue = formData.get("location");
-
+  
   const location = locationValue?.trim() || null;
   if (!location) return;
   
-  handleTable(location).catch(err => {
-    let errorBox = document.querySelector("span");
-    
-    if (!errorBox) {
-      errorBox = document.createElement("span");
-      form.appendChild(errorBox);
-    }
+  // loading here
+  const img = Object.assign(document.createElement("img"), {
+    src: loadingGif,
+    alt: "loading...",
+    className: "loading"
+  });
 
-    errorBox.textContent = err.message;
+  const errorField = form.querySelector(".errorField");
+  errorField.textContent = "";
+  errorField.appendChild(img);
+  
+  handleTable(location).catch(err => {
+    errorField.textContent = err.message;
   });
 }
 

@@ -9,14 +9,25 @@ html {
 /* Form */
 form {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
+
+  height: 1.8rem;
 }
 
-span {
+.errorField {
   color: red;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+}
+.loading {
+  padding: 0.2rem;
+  height: 100%;
 }
 
-input {
+input, button {
   padding: 0.2rem 0.5rem;
   font: inherit;
 }

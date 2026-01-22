@@ -39,7 +39,7 @@ async function getTable(location) {
     { onlyTh: true,
       scope: "colgroup",
       colspan: [0, 3, 2, 2],
-      content: ["Date Time", "Temperature", "Astronomy", "Conditions"]
+      content: ["Date Time", "Temperature °C", "Astronomy", "Conditions"]
     },
     {
       onlyTh: true,
